@@ -15,7 +15,19 @@ class Graph:
     (representing unordered pairs) as values. These Counters include only vertices.
     """
 
-    def __init__(self):
-        self.vertices = set()
-        self.edges = set()
-        self.incidence = dict()
+    def __init__(self, vertices = set(), edges = set(), incidence = dict()):
+        self._vertices = vertices
+        self._edges = edges
+        self._incidence = incidence
+
+    def vertices(self):
+        return self._vertices
+
+    def edges(self):
+        return self._edges
+
+    def incidence(self):
+        return self._incidence
+
+
+
