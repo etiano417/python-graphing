@@ -17,19 +17,12 @@ class Graph:
     """
 
     def __init__(self, vertices = set(), incidence = dict()):
-        if not type(vertices) is set:
-            raise TypeError("vertices must be a Set")
-        if not type(incidence) is dict:
-            raise TypeError("incidence must be a Dictionary")
-        for e in incidence.values():
-            if not e is Counter:
-                raise TypeError("incidence's values must all be Counters")
 
         if not vertices.isdisjoint(incidence.keys):
             raise ValueError("vertices and edges must be disjoint")
         #make sure each counter contains a total of 2
         for e in incidence.values():
-            if sum(e.values) != 2:
+            if e.len != 2:
                 raise ValueError("each edge in incidence needs exactly two end vertices")
 
         self._vertices = vertices
