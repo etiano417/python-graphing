@@ -32,6 +32,18 @@ class TestBadIncidenceType(TestGraphConstruction):
         with self.assertRaises(AttributeError) as context:
             Graph(self.vertices, self.incidence)
 
+class TestGraph(unittest.TestCase):
+    def setUp(self):
+        self.vertices = {"v1", "v2", "v3"}
+        end_vertices_1 = ("v1", "v2")
+        end_vertices_2 = ("v1", "v1")
+        self.incidence = {"e1": end_vertices_1, "e2": end_vertices_2}
+        self.g = Graph(self.vertices, self.incidence)
+
+    def runTest(self):
+        self.g.vertices == {"v1", "v2", "v3"}
+        self.g.edges == {"e1","e2"}
+        self.g.incidence == {"e1": ("v1", "v2"), "e2": ("v1", "v1")}
 
 def suite():
     suite = unittest.TestSuite()
