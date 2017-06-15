@@ -41,6 +41,20 @@ class Graph:
     def incidence(self):
         return self._incidence
 
+    def incident(self, element):
 
+        output = set()
 
+        if element in self.vertices:
+            for edge in self._incidence:
+                if element in self._incidence[edge]:
+                    output.add(edge)
 
+        elif element in self.edges:
+            end_vertices = self._incidence[element]
+            output = set(end_vertices)
+
+        else:
+            raise ValueError("given element not in graph")
+
+        return output

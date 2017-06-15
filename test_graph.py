@@ -48,5 +48,33 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(self.g.incidence, {"e1": ("v1", "v2"), "e2": ("v1", "v1")})
 
 
+class TestSimpleGraph(unittest.TestCase):
+    def setUp(self):
+        self.vertices = {"v1"}
+        self.g = Graph(self.vertices)
+
+    def runTest(self):
+        self.assertEquals(self.g.vertices, {"v1"})
+        self.assertEquals(self.g.edges, set())
+        self.assertEqual(self.g.incidence, dict())
+
+
+class TestIncidentVertices(TestGraph):
+    def runTest(self):
+        self.assertEqual(self.g.incident("v1"),{"e1","e2"})
+        self.assertEqual(self.g.incident("v2"), {"e1"})
+
+
+class TestIncidentVerticesSimple(TestSimpleGraph):
+    def runTest(self):
+        self.assertEqual(self.g.incident("v1"),set())
+
+
+class TestIncidentEdges(TestGraph):
+    def runTest(self):
+        self.assertEqual(self.g.incident("e1"), {"v1", "v2"})
+        self.assertEqual(self.g.incident("e2"), {"v1"})
+
+
 if __name__ == '__main__':
     unittest.main(exit=False)
