@@ -14,29 +14,29 @@ class TestGraphConstruction(unittest.TestCase):
         g = Graph(self.vertices,self.incidence)
 
 
-class TestBadVertices(TestGraphConstruction):
+class TestBadVerticesType(TestGraphConstruction):
     def setUp(self):
-        super(TestBadVertices, self).setUp()
+        super(TestBadVerticesType, self).setUp()
         self.vertices = ["v1","v2","v3"]
 
     def runTest(self):
-        with self.assertRaises(TypeError) as context:
+        with self.assertRaises(AttributeError) as context:
             Graph(self.vertices,self.incidence)
 
-class TestBadIncidence(TestGraphConstruction):
+class TestBadIncidenceType(TestGraphConstruction):
     def setUp(self):
-        super(TestBadIncidence, self).setUp()
+        super(TestBadIncidenceType, self).setUp()
         self.incidence = {"e1","e2"}
 
     def runTest(self):
-        with self.assertRaises(TypeError) as context:
+        with self.assertRaises(AttributeError) as context:
             Graph(self.vertices, self.incidence)
 
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(TestBadVertices())
-    suite.addTest(TestBadIncidence())
+    suite.addTest(TestBadVerticesType())
+    suite.addTest(TestBadIncidenceType())
     return suite
 
 

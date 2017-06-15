@@ -18,15 +18,15 @@ class Graph:
 
     def __init__(self, vertices = set(), incidence = dict()):
 
-        if not vertices.isdisjoint(incidence.keys):
+        if not vertices.isdisjoint(incidence.keys()):
             raise ValueError("vertices and edges must be disjoint")
         #make sure each counter contains a total of 2
         for e in incidence.values():
-            if e.len != 2:
+            if len(e) != 2:
                 raise ValueError("each edge in incidence needs exactly two end vertices")
 
         self._vertices = vertices
-        self._edges = edges
+        self._incidence = incidence
 
     @property
     def vertices(self):
