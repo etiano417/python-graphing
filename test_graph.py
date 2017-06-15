@@ -23,6 +23,7 @@ class TestBadVerticesType(TestGraphConstruction):
         with self.assertRaises(AttributeError) as context:
             Graph(self.vertices,self.incidence)
 
+
 class TestBadIncidenceType(TestGraphConstruction):
     def setUp(self):
         super(TestBadIncidenceType, self).setUp()
@@ -31,6 +32,7 @@ class TestBadIncidenceType(TestGraphConstruction):
     def runTest(self):
         with self.assertRaises(AttributeError) as context:
             Graph(self.vertices, self.incidence)
+
 
 class TestGraph(unittest.TestCase):
     def setUp(self):
@@ -41,15 +43,9 @@ class TestGraph(unittest.TestCase):
         self.g = Graph(self.vertices, self.incidence)
 
     def runTest(self):
-        self.g.vertices == {"v1", "v2", "v3"}
-        self.g.edges == {"e1","e2"}
-        self.g.incidence == {"e1": ("v1", "v2"), "e2": ("v1", "v1")}
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(TestBadVerticesType())
-    suite.addTest(TestBadIncidenceType())
-    return suite
+        self.assertEquals(self.g.vertices, {"v1", "v2", "v3"})
+        self.assertEquals(self.g.edges, {"e1","e2"})
+        self.assertEqual(self.g.incidence, {"e1": ("v1", "v2"), "e2": ("v1", "v1")})
 
 
 if __name__ == '__main__':

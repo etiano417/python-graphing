@@ -34,11 +34,13 @@ class Graph:
 
     @property
     def edges(self):
-        return self._incidence.keys
+        edge_iterator = iter(self._incidence.keys())
+        return set(edge_iterator)
 
     @property
     def incidence(self):
         return self._incidence
+
 
 
 
