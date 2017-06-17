@@ -24,6 +24,7 @@ class Graph:
         for e in incidence.values():
             if len(e) != 2:
                 raise ValueError("each edge in incidence needs exactly two end vertices")
+            #todo add a check for incidence values being vertices
 
         self._vertices = vertices
         self._incidence = incidence
@@ -55,6 +56,11 @@ class Graph:
             output = set(end_vertices)
 
         else:
-            raise ValueError("given element not in graph")
+            raise ValueError("element "+element+" not in graph")
 
         return output
+
+    def parallel(self,edge1,edge2):
+        if edge1 in self.vertices or edge2 in self.vertices:
+            raise ValueError("all given elements must be edges")
+        return self.incident(edge1) == self.incident(edge2)

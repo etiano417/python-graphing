@@ -44,7 +44,7 @@ class TestGraph(unittest.TestCase):
 
     def runTest(self):
         self.assertEquals(self.g.vertices, {"v1", "v2", "v3"})
-        self.assertEquals(self.g.edges, {"e1","e2"})
+        self.assertEquals(self.g.edges, {"e1", "e2"})
         self.assertEqual(self.g.incidence, {"e1": ("v1", "v2"), "e2": ("v1", "v1")})
 
 
@@ -74,6 +74,30 @@ class TestIncidentEdges(TestGraph):
     def runTest(self):
         self.assertEqual(self.g.incident("e1"), {"v1", "v2"})
         self.assertEqual(self.g.incident("e2"), {"v1"})
+
+
+class TestGraphParallelEdges(unittest.TestCase):
+    def setUp(self):
+        vertices = {"v1","v2","v3"}
+        end_vertices_1 = ("v1", "v2")
+        end_vertices_2 = ("v1", "v2")
+        end_vertices_3 = ("v1", "v1")
+        end_vertices_4 = ("v1", "v1")
+        incidence = {"e1": end_vertices_1, "e2": end_vertices_2, "e3": end_vertices_3, "e4": end_vertices_4}
+        self.g = Graph(vertices,incidence)
+
+
+class TestParallelFalse(TestGraphParallelEdges):
+    def runTest(self):
+        self.assertFalse(self.g.parallel("e1", "e3"))
+        with self.assertRaises(ValueError) as context:
+            self.g.parallel("v1", "e1")
+
+
+class TestParallel(TestGraphParallelEdges):
+    def runTest(self):
+        self.assertTrue(self.g.parallel("e1", "e2"))
+        self.assertTrue(self.g.parallel("e3", "e4"))
 
 
 if __name__ == '__main__':
