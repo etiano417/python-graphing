@@ -1,4 +1,3 @@
-from collections import Counter
 """Graphs and graph functions.
 
 This module offers a collection of graph classes and graph-related functions. These classes and functions are intended
@@ -60,7 +59,17 @@ class Graph:
 
         return output
 
-    def parallel(self,edge1,edge2):
-        if edge1 in self.vertices or edge2 in self.vertices:
-            raise ValueError("all given elements must be edges")
-        return self.incident(edge1) == self.incident(edge2)
+    def parallel(self,edge):
+        if edge in self.vertices:
+            raise ValueError("given element must be an edge")
+        end_points = self.incident(edge)
+
+        output = set()
+
+        for element in self.edges:
+            if self.incident(element) == end_points:
+                output.add(element)
+
+        output.remove(edge)
+
+        return output
