@@ -85,3 +85,20 @@ class Graph:
 
         end_points = self.incident(edge)
         return len(end_points) == 1
+
+    def closed_neighborhood(self, vertex):
+        if vertex not in self.vertices:
+            raise ValueError("given element must be a vertex")
+
+        output = set()
+
+        for edge in self.incident(vertex):
+            output = output.union(self.incident(edge))
+
+        #even though the previous operation will add the given vertex to the
+        #output set if it has any incident edges at all, it will fail to do
+        #so in the case of an isolated vertex.
+        output = output.union({vertex})
+
+        return output
+
