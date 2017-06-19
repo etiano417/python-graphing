@@ -126,46 +126,52 @@ class TestParallel(TestGraphParallelEdges):
         self.assertEqual(self.g.parallel("e3"), {"e4"})
 
 
+class TestLoopBadInput(TestGraph):
+    def runTest(self):
+        with self.assertRaises(ValueError) as context:
+            self.g.is_loop("v1")
+
+
 class TestLoopPass(TestGraph):
     def runTest(self):
-        self.assertTrue(self.g.isLoop("e2"))
+        self.assertTrue(self.g.is_loop("e2"))
 
 
 class TestLoopFail(TestGraph):
     def runTest(self):
-        self.assertFalse(self.g.isLoop("e1"))
+        self.assertFalse(self.g.is_loop("e1"))
 
 
 class TestOpenNeighborhoodBadInput(TestGraph):
     def runTest(self):
         with self.assertRaises(ValueError) as context:
-            self.g.openNeighborhood("e1")
+            self.g.open_neighborhood("e1")
 
 
 class TestOpenNeighborhoodIsolated(TestGraph):
     def runTest(self):
-        self.assertEqual(self.g.openNeighborhood("v3"),{})
+        self.assertEqual(self.g.open_neighborhood("v3"),{})
 
 
 class TestOpenNeighborhood(TestGraph):
     def runTest(self):
-        self.assertEqual(self.g.openNeighborhood("v1"),{"v2"})
+        self.assertEqual(self.g.open_neighborhood("v1"),{"v2"})
 
 
 class TestClosedNeighborhoodBadInput(TestGraph):
     def runTest(self):
         with self.assertRaises(ValueError) as context:
-            self.g.closedNeighborhood("e1")
+            self.g.closed_neighborhood("e1")
 
 
 class TestClosedNeighborhoodIsolated(TestGraph):
     def runTest(self):
-        self.assertEqual(self.g.closedNeighborhood("v3"),{"v3"})
+        self.assertEqual(self.g.closed_neighborhood("v3"),{"v3"})
 
 
 class TestClosedNeighborhood(TestGraph):
     def runTest(self):
-        self.assertEqual(self.g.openNeighborhood("v1"),{"v1","v2"})
+        self.assertEqual(self.g.closed_neighborhood("v1"),{"v1","v2"})
 
 if __name__ == '__main__':
     unittest.main(exit=False)
