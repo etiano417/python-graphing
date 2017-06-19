@@ -102,3 +102,7 @@ class Graph:
 
         return output
 
+    def open_neighborhood(self, vertex):
+        closed_n = self.closed_neighborhood(vertex)
+        return closed_n.difference({vertex})
+

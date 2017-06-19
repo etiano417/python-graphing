@@ -150,7 +150,7 @@ class TestOpenNeighborhoodBadInput(TestGraph):
 
 class TestOpenNeighborhoodIsolated(TestGraph):
     def runTest(self):
-        self.assertEqual(self.g.open_neighborhood("v3"),{})
+        self.assertEqual(self.g.open_neighborhood("v3"), set())
 
 
 class TestOpenNeighborhood(TestGraph):
