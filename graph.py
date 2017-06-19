@@ -64,7 +64,7 @@ class Graph:
 
         return output
 
-    def parallel(self,edge):
+    def parallel(self, edge):
         if edge in self.vertices:
             raise ValueError("given element must be an edge")
         end_points = self.incident(edge)
@@ -78,3 +78,10 @@ class Graph:
         output.remove(edge)
 
         return output
+
+    def is_loop(self, edge):
+        if edge not in self.edges:
+            raise ValueError("given element must be an edge")
+
+        end_points = self.incident(edge)
+        return len(end_points) == 1
