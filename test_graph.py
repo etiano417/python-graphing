@@ -14,6 +14,28 @@ class TestGraphConstruction(unittest.TestCase):
         g = Graph(self.vertices,self.incidence)
 
 
+class TestBadIncidenceKey(unittest.TestCase):
+    def setUp(self):
+        self.vertices = {"v1","v2"}
+        end_vertices = ("v1","v2")
+        self.incidence = {"v1": end_vertices}
+
+    def runTest(self):
+        with self.assertRaises(ValueError) as context:
+            Graph(self.vertices,self.incidence)
+
+
+class TestBadIncidenceValue(unittest.TestCase):
+    def setUp(self):
+        self.vertices = {"v1","v2"}
+        end_vertices = ("v1","v3")
+        self.incidence = {"e1": end_vertices}
+
+    def runTest(self):
+        with self.assertRaises(ValueError) as context:
+            Graph(self.vertices,self.incidence)
+
+
 class TestBadVerticesType(TestGraphConstruction):
     def setUp(self):
         super(TestBadVerticesType, self).setUp()
@@ -103,6 +125,47 @@ class TestParallel(TestGraphParallelEdges):
         self.assertEqual(self.g.parallel("e1"),{"e2","e5"})
         self.assertEqual(self.g.parallel("e3"), {"e4"})
 
+
+class TestLoopPass(TestGraph):
+    def runTest(self):
+        self.assertTrue(self.g.isLoop("e2"))
+
+
+class TestLoopFail(TestGraph):
+    def runTest(self):
+        self.assertFalse(self.g.isLoop("e1"))
+
+
+class TestOpenNeighborhoodBadInput(TestGraph):
+    def runTest(self):
+        with self.assertRaises(ValueError) as context:
+            self.g.openNeighborhood("e1")
+
+
+class TestOpenNeighborhoodIsolated(TestGraph):
+    def runTest(self):
+        self.assertEqual(self.g.openNeighborhood("v3"),{})
+
+
+class TestOpenNeighborhood(TestGraph):
+    def runTest(self):
+        self.assertEqual(self.g.openNeighborhood("v1"),{"v2"})
+
+
+class TestClosedNeighborhoodBadInput(TestGraph):
+    def runTest(self):
+        with self.assertRaises(ValueError) as context:
+            self.g.closedNeighborhood("e1")
+
+
+class TestClosedNeighborhoodIsolated(TestGraph):
+    def runTest(self):
+        self.assertEqual(self.g.closedNeighborhood("v3"),{"v3"})
+
+
+class TestClosedNeighborhood(TestGraph):
+    def runTest(self):
+        self.assertEqual(self.g.openNeighborhood("v1"),{"v1","v2"})
 
 if __name__ == '__main__':
     unittest.main(exit=False)
